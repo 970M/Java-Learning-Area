@@ -16,35 +16,46 @@ public class PhoneBook {
         String userPhoneNumber = getUserInput("Entrez un numéro de téléphone :");
 
         Contact newContact = new Contact(userLastName, userFirstName, userPhoneNumber);
+        System.out.println(newContact.toString());
+        sc.close();
 
-        File phoneBookFile = new File("./phoneBookFile.csv");
+        // Permetre, si une varible doit etre fermée, de directement l'instancier pour
+        // qu'elle soit fermée automatiquement
+        try (BufferedWriter fileWriter = new BufferedWriter(
+                new FileWriter(getOrCratePhoneBookFile("./Java-Tuto-Project/repertoire/phoneBookFile.csv"), true))) {
 
-        if (phoneBookFile.exists()) {
-            System.out.println("File exist !");
-        } else {
-            System.out.println("WRB: File does not exist !");
-            try {
-                phoneBookFile.createNewFile();
-                System.out.println("Creating file ok");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        try {
-            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(phoneBookFile, true));
             fileWriter.append(newContact.toString());
             fileWriter.append("\n");
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(newContact.toString());
-        sc.close();
+
     }
 
     public static String getUserInput(String userRequest) {
 
         System.out.println(userRequest);
         return sc.nextLine();
+    }
+
+    public static File getOrCratePhoneBookFile(String phoneBookFilePath) {
+        // File phoneBookFile = new File("./phoneBookFile.csv");
+        File phoneBookFile = new File(phoneBookFilePath);
+
+        if (phoneBookFile.exists()) {
+            System.out.println("File exist !");
+            return phoneBookFile;
+        }
+
+        try {
+            System.out.println("WRN:" + phoneBookFilePath + " File does not exist !");
+            phoneBookFile.createNewFile();
+            System.out.println("Creating file ok");
+            return phoneBookFile;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
