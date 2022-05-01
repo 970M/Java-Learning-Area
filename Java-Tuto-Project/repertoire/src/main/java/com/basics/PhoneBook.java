@@ -8,6 +8,8 @@ public class PhoneBook {
 
     public static Scanner sc = null;
 
+    public static final String PHONE_BOOK_FILE_PATH = "./Java-Tuto-Project/repertoire/phoneBookFile.csv";
+
     public static void main(String[] args) {
         sc = new Scanner(System.in);
 
@@ -19,18 +21,8 @@ public class PhoneBook {
         System.out.println(newContact.toString());
         sc.close();
 
-        // Permetre, si une varible doit etre fermée, de directement l'instancier pour
-        // qu'elle soit fermée automatiquement
-        try (BufferedWriter fileWriter = new BufferedWriter(
-                new FileWriter(getOrCratePhoneBookFile("./Java-Tuto-Project/repertoire/phoneBookFile.csv"), true))) {
-
-            fileWriter.append(newContact.toString());
-            fileWriter.append("\n");
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        File phoneBookFile = getOrCratePhoneBookFile(PHONE_BOOK_FILE_PATH);
+        appendContactToPhoneBook(phoneBookFile, newContact);
     }
 
     public static String getUserInput(String userRequest) {
@@ -57,5 +49,21 @@ public class PhoneBook {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static void appendContactToPhoneBook(File phoneBookFile, Contact newContact) {
+
+        // Permetre, si une varible doit etre fermée, de directement l'instancier pour
+        // qu'elle soit fermée automatiquement
+        try (BufferedWriter fileWriter = new BufferedWriter(
+                new FileWriter(phoneBookFile, true))) {
+
+            fileWriter.append(newContact.toString());
+            // fileWriter.append("\n");
+            fileWriter.append(System.lineSeparator());
+            // fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
