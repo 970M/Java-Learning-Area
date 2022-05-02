@@ -3,11 +3,11 @@ package cards_game.Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import cards_game.Game.GameEvaluator;
 import cards_game.Model.Deck;
 import cards_game.View.View;
 import cards_game.Model.Player;
 import cards_game.Model.PlayingCard;
-import cards_game.GameEvaluator;
 
 public class GameController {
 
@@ -20,13 +20,15 @@ public class GameController {
     Player winner;
     View view;
     GameState gameState;
+    GameEvaluator evaluator;
 
-    public GameController(Deck deck, View view) {
+    public GameController(Deck deck, View view, GameEvaluator gameEvaluator) {
         super();
         this.deck = deck;
         this.view = view;
         this.players = new ArrayList<Player>();
         this.gameState = GameState.AddingPlayers;
+        this.evaluator = gameEvaluator;
         view.setController(this);
     }
 
@@ -84,8 +86,8 @@ public class GameController {
     }
 
     void evaluateWinner() {
-        GameEvaluator ge = new GameEvaluator();
-        this.winner = ge.evaluateWinner(this.players); // "this" pas obligtoire
+
+        this.winner = evaluator.evaluateWinner(this.players); // "this" pas obligtoire
     }
 
     void displayWinner() {
