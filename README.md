@@ -15,3 +15,7 @@
 2022-06-01
 
 [https://openclassrooms.com/fr/courses/6810956-ecrivez-du-code-java-maintenable-avec-mvc-et-solid/6926893-s-pour-single-responsibility-le-principe-de-la-responsabilite-unique]
+
+2022-06-01
+
+[https://openclassrooms.com/fr/courses/6810956-ecrivez-du-code-java-maintenable-avec-mvc-et-solid/6926911-creez-des-objets-avec-les-design-patterns-de-creation]
