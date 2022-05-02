@@ -5,7 +5,7 @@ import java.util.List;
 
 import cards_game.Game.GameEvaluator;
 import cards_game.Model.Deck;
-import cards_game.View.View;
+import cards_game.View.GameViewable;
 import cards_game.Model.Player;
 import cards_game.Model.PlayingCard;
 
@@ -18,11 +18,11 @@ public class GameController {
     Deck deck;
     List<Player> players;
     Player winner;
-    View view;
+    GameViewable view;
     GameState gameState;
     GameEvaluator evaluator;
 
-    public GameController(Deck deck, View view, GameEvaluator gameEvaluator) {
+    public GameController(Deck deck, GameViewable view, GameEvaluator gameEvaluator) {
         super();
         this.deck = deck;
         this.view = view;
@@ -85,19 +85,35 @@ public class GameController {
         this.run();
     }
 
-    void evaluateWinner() {
+    public void evaluateWinner() {
 
         this.winner = evaluator.evaluateWinner(this.players); // "this" pas obligtoire
     }
 
-    void displayWinner() {
+    public void displayWinner() {
         view.showWinner(winner.getName());
     }
 
-    void rebuildDeck() {
+    public void rebuildDeck() {
         for (Player player : players) {
             deck.returnCardToDeck(player.removeCard());
         }
+    }
+
+    public void exitGame() {
+        System.exit(0);
+    }
+
+    public void nextAction(String nextChoice) {
+
+        if ("+q".equals(nextChoice)) {
+            exitGame();
+
+        } else {
+
+            startGame();
+        }
+
     }
 
 }
