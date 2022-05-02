@@ -6,7 +6,7 @@ public class PlayingCard {
     private boolean faceUp;
 
     public PlayingCard(Rank rank, Suit suit) {
-        super(); // ?? hérite de rien ??
+        // super(); // ?? hérite de rien ??
         this.rank = rank;
         this.suit = suit;
     }
